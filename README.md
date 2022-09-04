@@ -53,6 +53,7 @@ ts-node:
     Na pasta auxiliar ficam o arquivo html pra nos auxiliar nos primeiro momento (pra converter os hmtl pra mustache, assim como o TS é convertido pra JS no final), as imagens e estilos ficam na pasta de arquivos publicos, ou seja, na pasta 'public'. Terminado o projeto, a pasta auxiliar não é mais necessária.
 - Criar pasta para os views do mustache (dentro do servidor): `mkdir src/views`
 - Criar pasta 'routes' dentro de src, visando organização do projeto: `mkdir src/routes`
+- Criar pasta controllers, para armazenar os controllers de rotas: `mkdir src/controllers`
 
 # Configurando o Servidor
 - Criar arquivo de Servidor: `type > src/server.ts`
@@ -82,11 +83,24 @@ ts-node:
 - Criar arquivo de rotas na pasta de rotas: `type nul > src/routes/index.ts`
 - Importar gerenciador de rotas do express: import {Router} from 'express'
 - Declarar gerenciador de rotas: const router = Router()
-- Definindo rota da pagina principal: router.get('/', (req, res)=>{(res.send('home')})
+
+- Definindo rotas da pagina (home, dogs, cats, fishes: router.get('/', PageController.home)
+    - Obs: Pra não ficar mostrando erro nas linhas, crie os controllers, ou ignore e siga as próximas etapas até chegar no tópico de controllers.
+- Definindo a rota da pagina 'busca': router.get('/search', SearchController.search)
 - Exportando rota/rotas: export default router
-- Importando rota criada no servidor (arquivo server.ts): import mainRoutes from '.routes/index'
-- Definindo a rota no servidor: server.use(mainRoutes);
+
+- Importando rota criada no servidor principal (arquivo server.ts): import mainRoutes from '.routes/index'
+- Definindo servidor de rotas no servidor principal (em server.ts): server.use(mainRoutes);
 - Definindo 404 - not found: server.use((req, res)=>{res.send('Pagina não encontrada')})
+
+# Criando Controllers
+- Visto que as quatro paginas de animais serão a mesma coisa, podemos usar somente um controlador pra elas. Como a unica pagina diferente é a da pesquisa, podemos criar um só pra ele, sendo assim, criamos somente dois controllers: `type nul > controller/pageController.ts` e `type nul > controller/searchController.ts`.
+- Estrutura dos controllers: 
+    * Import request e response
+    * Criação das consts das paginas home, dogs, cats, fishes (monstrando só a linha de home, repetir para as demais): const home = (req: Request, res:Response) => {}
+    * Exportação da const: É só colocar o export antes do const (export const home....)
+    * Importação dos controllers no arquivo de rotas: import * as nome-do-arquivo from 'caminho-do-arquivo';
+    * Testando se funcionou (Direcionando a primeira rota pra uma pagina de teste): res.send('home no controller!');
 
 # Erros e soluções
 - tsconfig
@@ -94,3 +108,15 @@ ts-node:
 
 - Servidor não encontra o express
     Na importação no arquivo de servidor (server.ts) você importou 'Express' com 'E' maiúsculos, o express servidor tem o 'e' minúsculo.
+
+- Module_not_found
+    * Problema: Ao executar o 'start-dev' retornava o erro de modulo não encontrado.
+    * Possíveis causas: 
+        - Espaço entre as extenções "ts, json, mustache". Não pode ter espaço.
+        - Nodemon ou outro modulo/dependencia não foi instalado.
+    * Diagnóstico:
+        - Usado npm e npx no start dev e retornando mesmo erro;
+        - Usado o comando de atalho puro, sem o start dev. Retornou: "nodemon" não existe;
+        - Tentado usar o nodemon puro (nodemon pasta/arquivo.ts) retornou que nodemon não existe;
+    * Conclusão: assim como os ts e o node em si, os modulos só estão sendo executados com o npx.    
+    * Solução: Ao invés de rodar somente "nodemon -e ts,json,mustache src/server.ts", rodar "npx nodemon -e ts,json,mustache src/server.ts"

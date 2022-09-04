@@ -4,7 +4,7 @@ import mustache from 'mustache-express';
 import path from "path";
 import mainRoutes from './routes/index'
 
-//Chamando dotEnv
+// Chamando dotEnv
 dotenv.config();
 
 // Declarando servidor
@@ -32,5 +32,3 @@ server.use((req, res)=>{
 
 // Rodar servidor
 server.listen(process.env.PORT);
-
-
