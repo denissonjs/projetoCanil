@@ -52,6 +52,7 @@ ts-node:
 - Pasta auxiliar (onde fica o html): `mkdir _html`
     Na pasta auxiliar ficam o arquivo html pra nos auxiliar nos primeiro momento (pra converter os hmtl pra mustache, assim como o TS é convertido pra JS no final), as imagens e estilos ficam na pasta de arquivos publicos, ou seja, na pasta 'public'. Terminado o projeto, a pasta auxiliar não é mais necessária.
 - Criar pasta para os views do mustache (dentro do servidor): `mkdir src/views`
+- Criar pasta 'routes' dentro de src, visando organização do projeto: `mkdir src/routes`
 
 # Configurando o Servidor
 - Criar arquivo de Servidor: `type > src/server.ts`
@@ -76,6 +77,16 @@ ts-node:
     * Chamando a função mustache: server.engine('mustache', mustache());
     * Definindo pasta de arquivos estaticos(public): server.use(express.static(pach.join(__dirname, '../public')));
     * Rodar servidor: server.listen(process.env.PORT)
+
+# Criando Rotas
+- Criar arquivo de rotas na pasta de rotas: `type nul > src/routes/index.ts`
+- Importar gerenciador de rotas do express: import {Router} from 'express'
+- Declarar gerenciador de rotas: const router = Router()
+- Definindo rota da pagina principal: router.get('/', (req, res)=>{(res.send('home')})
+- Exportando rota/rotas: export default router
+- Importando rota criada no servidor (arquivo server.ts): import mainRoutes from '.routes/index'
+- Definindo a rota no servidor: server.use(mainRoutes);
+- Definindo 404 - not found: server.use((req, res)=>{res.send('Pagina não encontrada')})
 
 # Erros e soluções
 - tsconfig
