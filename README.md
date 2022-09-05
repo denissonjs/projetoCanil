@@ -116,7 +116,10 @@ ts-node:
         - No inicio do código: {{>partials/header}}
     * Uma vez configurado, pode chamar a renderização no controller das pages, pelo menos a home, estará funcionando: res.render('pages/page')
     
-
+# Dinamizando as paginas
+- Define o objeto 'banner' nas pageControllers com o titulo que vai ficar e a imagem que vai receber: res.render('pages/page', {banner:{title: 'titulo', background: 'imagem'}}).
+- No header.mustache: Adicionar a 'condição' banner, para validar que aquele trecho se refere ao objeto banner: {{#banner}} codigo mustache/html {{/banner}}
+- Pra 'dinamizar' as paginas é só ir no arquivo mustache é só substituir o nome da imagem pelo objeto 'background' do banner e o titulo pelo objeto 'titulo' do banner: 
 # Erros e soluções
 - tsconfig
     JSON schema for the TypeScript compiler's configuration file: Você criou um arquivo 'index.js' fora da pasta src, que foi a pasta que vc informou através do 'rootDir' que estava o index. Solução, redirecionar o rootDir para onde está o index.ts, ou colocar o index.ts onde vc direcionou o rootDir.
