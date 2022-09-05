@@ -52,6 +52,7 @@ ts-node:
 - Pasta auxiliar (onde fica o html): `mkdir _html`
     Na pasta auxiliar ficam o arquivo html pra nos auxiliar nos primeiro momento (pra converter os hmtl pra mustache, assim como o TS é convertido pra JS no final), as imagens e estilos ficam na pasta de arquivos publicos, ou seja, na pasta 'public'. Terminado o projeto, a pasta auxiliar não é mais necessária.
 - Criar pasta para os views do mustache (dentro do servidor): `mkdir src/views`
+- Criar subpastas pages e partials dentro de views para separar o body (que sempre muda) do header e footer (que são sempre iguais) dos arquivos mustache: `mkdir pages partials`
 - Criar pasta 'routes' dentro de src, visando organização do projeto: `mkdir src/routes`
 - Criar pasta controllers, para armazenar os controllers de rotas: `mkdir src/controllers`
 
@@ -101,6 +102,20 @@ ts-node:
     * Exportação da const: É só colocar o export antes do const (export const home....)
     * Importação dos controllers no arquivo de rotas: import * as nome-do-arquivo from 'caminho-do-arquivo';
     * Testando se funcionou (Direcionando a primeira rota pra uma pagina de teste): res.send('home no controller!');
+
+# Configurando as Viewers
+- Criar arquivos mustache na pasta views:    
+    * Arquivos partials (footer e header): `type nul > footer.mustache` e `type nul > header.mustache`
+    * Inserir o código Html nos arquivos mustache, o footer no arquivo footer, header no header.
+    * Fazer alterações (se houverem) para adaptar por exemplo, o caminho de imagens (antes poderia ser img/teste, agora pode ser ../img/teste), links etc. no novo destino do 'html' que agora é mustache.
+
+    * Arquivos de pages:
+        Obs.: Como todas as paginas tem a mesma estrutura, só basta um arquivo para as paginas, sendo assim: `type nul > views/page.mustache`
+    * Importar no arquivo page, footer e header:
+        - No fim do codigo: {{>partials/footer}}
+        - No inicio do código: {{>partials/header}}
+    * Uma vez configurado, pode chamar a renderização no controller das pages, pelo menos a home, estará funcionando: res.render('pages/page')
+    
 
 # Erros e soluções
 - tsconfig
