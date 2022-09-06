@@ -55,6 +55,7 @@ ts-node:
 - Criar subpastas pages e partials dentro de views para separar o body (que sempre muda) do header e footer (que são sempre iguais) dos arquivos mustache: `mkdir pages partials`
 - Criar pasta 'routes' dentro de src, visando organização do projeto: `mkdir src/routes`
 - Criar pasta controllers, para armazenar os controllers de rotas: `mkdir src/controllers`
+- Criar pasta auxiliar 'helpers' que é onde ficará nosso scripts de auxilio do projeto: `mkdir src/helpers`
 
 # Configurando o Servidor
 - Criar arquivo de Servidor: `type > src/server.ts`
@@ -119,8 +120,26 @@ ts-node:
 # Dinamizando as paginas
 - Define o objeto 'banner' nas pageControllers com o titulo que vai ficar e a imagem que vai receber: res.render('pages/page', {banner:{title: 'titulo', background: 'imagem'}}).
 - No header.mustache: Adicionar a 'condição' banner, para validar que aquele trecho se refere ao objeto banner: {{#banner}} codigo mustache/html {{/banner}}
-- Pra 'dinamizar' as paginas é só ir no arquivo mustache é só substituir o nome da imagem pelo objeto 'background' do banner e o titulo pelo objeto 'titulo' do banner: 
-# Erros e soluções
+- Pra 'dinamizar' as paginas é só ir no arquivo mustache e substituir o nome da imagem pelo objeto 'background' do banner e o titulo pelo objeto 'titulo' do banner: Verificar Section na page.mustache.
+
+# Modificando classes no mustache (ativando menu)
+## Modo 1 (pouco recomendado)
+- No nosso pageController basta criar um objeto que tem aquela seção (dog, cat fish...) como ativa e sinalizar as demais como inativa, siga em todas as seções o exemplo a seguir criado em Dogs: menu: { todas: false, dog: true, cat: false, fish: false}.
+    * Após isso, basta inserir a condicional das class no mustache, (colocando em dog, pra o exemplo anterior) onde em portugol seria; "Se menu.dog=true essa classe está ativa": `class="{{#menu.dog}}active{{/menu.dog}}"`
+
+## Modo 2 (mais recomendado)
+- Criar o arquivo "criateMenuObjects" pra receber nossa função na nossa pasta de scripts (helpers): `type nul > criateMenuObjects.ts`
+- Cria um tipo de dado contendo somente as strings das seções disponiveis para blindar erros e impedir de uma pagina que não existe seja criada: `type MenuOptions = '' | 'all' | 'dog' | 'cat' | 'fish'`
+- Criamos uma função que terá como parametro o menu ativo no momento, e como dito no tópico acima, está blindado de erro por causa do type, sendo assim, somente um dos menus que foi setado no type será retornado.
+- Setamos todos os menus como false, para 'desmarcar' como ative, todos os menus. 
+- Criamos um if pra se o menu existir (for diferente de vazio '') atribui true ao menu que foi selecionado.
+- Retornamos o menu ativo: `return menu-que-recebeu-true`
+- Exportamos a função a função para usar no nosso controller: `colocando export no inicio da função`
+- importamos a função no controler: `import {fucao-criada} from '..helpers/funcao-criada'`
+- Alteramos o objeto menu do nosso controller, chamando a função, com o parametro dela, no 'all' o parametro 'all', do dog, o parametro 'dog' etc. Veja o codigo.
+
+
+# Erros e Correções
 - tsconfig
     JSON schema for the TypeScript compiler's configuration file: Você criou um arquivo 'index.js' fora da pasta src, que foi a pasta que vc informou através do 'rootDir' que estava o index. Solução, redirecionar o rootDir para onde está o index.ts, ou colocar o index.ts onde vc direcionou o rootDir.
 

@@ -1,14 +1,8 @@
 {{>partials/header}}
-<nav>
-    <ul>
-        <li class="active"><a href="/">Todos</a></li>
-        <li class=""><a href="/dogs">Cachorros</a></li>
-        <li class=""><a href="/cats">Gatos</a></li>
-        <li class=""><a href="/fishes">Peixes</a></li>
-    </ul>   
-</nav>
-{{#banner}} 
+
+{{#banner}}  {{!condicional do mustache; Basicamente #banner=true, ou seja, se banner existe}}
 <section class="banner" style="background-image: url('images/{{background}}')">{{title}}</section>
+{{!O valor do atributo "background" fica no objeto banner, assim como o atributo "title" na linha a seguir}}
 <h2>{{title}} disponíveis para adoção</h2>
 {{/banner}}
 
