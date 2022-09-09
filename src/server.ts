@@ -27,7 +27,7 @@ server.use(mainRoutes)
 
 // Definindo 404-not found
 server.use((req, res)=>{
-    res.send('Pagina Não encontrada')
+    res.render('pages/404')
 })
 
 // Rodar servidor

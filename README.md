@@ -56,6 +56,7 @@ ts-node:
 - Criar pasta 'routes' dentro de src, visando organização do projeto: `mkdir src/routes`
 - Criar pasta controllers, para armazenar os controllers de rotas: `mkdir src/controllers`
 - Criar pasta auxiliar 'helpers' que é onde ficará nosso scripts de auxilio do projeto: `mkdir src/helpers`
+- Criamos a pasta models para colocar nossos modelos de paginas: `mkdir src/models`
 
 # Configurando o Servidor
 - Criar arquivo de Servidor: `type > src/server.ts`
@@ -138,6 +139,28 @@ ts-node:
 - importamos a função no controler: `import {fucao-criada} from '..helpers/funcao-criada'`
 - Alteramos o objeto menu do nosso controller, chamando a função, com o parametro dela, no 'all' o parametro 'all', do dog, o parametro 'dog' etc. Veja o codigo.
 
+# Criando o modelos das pages
+
+- Criamos um arquivo para definir o modelo da pagina pets dentro da pasta models: `type nul > pets.ts`
+- Nesse arquivo criamos nosso type, já que todos os objetos da pagina terão os mesmos tipos de informações (vide model pets.ts)
+- Criamos nossa 'base de dados' que por enquanto não vai ser um banco, mas um array que armazenará as informações.
+
+## Criando os Filtros
+- Criar as funções de filtro: Para melhor compreensão, vide o arquivo pets.ts
+- Exporta função dos filtros: `export const pets`
+- Importar função para o controllers: `import { pets } from "../models/pets"`
+- Cria a variável de controle (vamos usar o all como exemplo): `let list = pets.getAll()`
+- Chama a função pra ela gerar a lista: `list`
+- Modifica o mustache pra ao invés de aparecer o elemento com sexo, cor, nome definido: Mostrar todos os true com a descrição do array: Vide arquivo page.mustache.
+- Para adicionar o filtro por tipo é só chamar a função getTipo com o argumento do tipo do pet do controlador em que ele está sendo inserido.
+## Criando o filtro de Pesquisa
+- Importa o renderizador de menu e o modelo de menu: `import { createMenuObject } from "../menuObjectCreate"`;
+ `import { pets } from "../models/pets";`
+ - Cria o renderizador, da mesma forma do pageController: Vide page e searchcontroler.
+ - Direcionar a pagina para quando não existir o animal pesquisado: No mustache: `{{^list}}` é o 'senão/else' do mustache, ou seja, dentro do else do mustache, incluimos uma div informando que não existe aquele animal.
+ - Manter o nome do animal pesquisado, na caixa de pesquisa, para indicar ao usuário em qual pesquisa ele está: no controller, chama o query junto com o list; E no mustache atribui o valor do query ao value do input: `input... value="{{query}}"`
+ - Pagina não encontrada: Cria um arquivinho com a div informando o 404, e chama esse arquivo no 404 do server.
+
 
 # Erros e Correções
 - tsconfig
@@ -157,3 +180,7 @@ ts-node:
         - Tentado usar o nodemon puro (nodemon pasta/arquivo.ts) retornou que nodemon não existe;
     * Conclusão: assim como os ts e o node em si, os modulos só estão sendo executados com o npx.    
     * Solução: Ao invés de rodar somente "nodemon -e ts,json,mustache src/server.ts", rodar "npx nodemon -e ts,json,mustache src/server.ts"
+
+- Mesmo configurado, e tudo corretamente, o search apotava pra a pagina inicial. 
+    * Problema: O action do form apontava pra "/" ao invés de "/search". 
+    * Solução: Apontar para o "/search".

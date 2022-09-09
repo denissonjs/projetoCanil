@@ -1,12 +1,15 @@
 import { Request, Response } from "express";
 import { createMenuObject } from "../menuObjectCreate";
+import { pets } from "../models/pets";
 
 // Declarando e exportando os Controllers
 export const home = (req:Request, res:Response)=> {
+    let list = pets.getAll(); // Defino minha função que chama todos, lá no models.ts.
+
     // Chamando o renderizador
     res.render('pages/page', { // Chamando renderizador das paginas
         banner: { // Objeto para dinamizar as paginas
-            title: 'teste',
+            title: 'Todos os animais',
             background: 'allanimals.jpg'
         },
         /* Maneira 01 de setar o menuActive
@@ -18,11 +21,15 @@ export const home = (req:Request, res:Response)=> {
         }*/
 
         // Maneira 02 de setar o menuActive
-        menu: createMenuObject('all')
+        menu: createMenuObject('all'),
         
+        list // chamo a função getAll que defini acima.
     })
 }
 export const dogs = (req:Request, res:Response)=> {
+
+    let list = pets.getFromType('dog')
+
     res.render('pages/page', {
         banner: {
             title: 'Cachorros',
@@ -35,10 +42,15 @@ export const dogs = (req:Request, res:Response)=> {
             fish: false,
         }*/
 
-        menu: createMenuObject('dog')
+        menu: createMenuObject('dog'),
+
+        list
     })
 }
 export const cats = (req:Request, res:Response)=> {
+
+    let list = pets.getFromType('cat')
+
     res.render('pages/page', {
         banner: {
             title: 'Gatos',
@@ -50,10 +62,15 @@ export const cats = (req:Request, res:Response)=> {
             cat: true,
             fish: false,
         }*/
-        menu: createMenuObject('cat')
+        menu: createMenuObject('cat'),
+
+        list
     })
 }
 export const fishes = (req:Request, res:Response)=> {
+
+    let list = pets.getFromType('fish')
+
     res.render('pages/page', {
         banner: {
             title: 'Peixes',
@@ -65,6 +82,8 @@ export const fishes = (req:Request, res:Response)=> {
             cat: false,
             fish: true,
         }*/
-        menu: createMenuObject('fish')
+        menu: createMenuObject('fish'),
+
+        list
     })
 }
