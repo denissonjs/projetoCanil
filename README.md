@@ -19,25 +19,14 @@ ts-node:
 # Para Rodar o Projeto
  `npm run start-dev`
 
-# Manipular Versões do Projeto
-- Clonar: `git clone caminho-ou-url-do-projeto`
-- Ver Status: `git: status`
-- Adicionar todas Modif. ao Repositorio: `git add .`
-- Adicionar uma Modif. ao Reporitorio: `git add arq-da-modif`
-- Commit: `git commit -m "descrição do commit"`
-- Adicionar um Reposit. de Origem: `git remote add origin url-do-repositorio`
-- Criar nova Branch para o repositorio de origem (principal): git branch main
-- Empurrar Commit para repositorio de origem: `git push -f origin main`
-
-
 # Iniciar projeto
 - Iniciar NPM: `npm init -y`
 - Iniciar TS: `tsc --init`
 
-# Config. Atalho Start-Dev
+# Config. Atalho Start-Dev (Package.json)
 
     1 - Cria uma linha na área de Scripts do arquivo packga.json: "nome-do-atalho": "ação do atalho"
-    ex.: "star-dev" : "nodemon -e ts,json,mustache src/server.ts"
+    Instrução: "star-dev" : "nodemon -e ts,json,mustache src/server.ts"
 
 # Configurações 'tsconfig.json'
 
@@ -49,7 +38,7 @@ ts-node:
 # Criação de Pastas
 - Criar pastas de arquivos TS (src e dist): `mkdir src dist` 
 - Pasta de arquivos publicos: `mkdir public`
-- Pasta auxiliar (onde fica o html): `mkdir _html`
+- Pasta auxiliar (arquivos html para auxilio): `mkdir _html`
     Na pasta auxiliar ficam o arquivo html pra nos auxiliar nos primeiro momento (pra converter os hmtl pra mustache, assim como o TS é convertido pra JS no final), as imagens e estilos ficam na pasta de arquivos publicos, ou seja, na pasta 'public'. Terminado o projeto, a pasta auxiliar não é mais necessária.
 - Criar pasta para os views do mustache (dentro do servidor): `mkdir src/views`
 - Criar subpastas pages e partials dentro de views para separar o body (que sempre muda) do header e footer (que são sempre iguais) dos arquivos mustache: `mkdir pages partials`
